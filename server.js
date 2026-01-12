@@ -32,16 +32,16 @@ app.get('/foods', async (req, res) => {
     res.render('new.ejs')
 })
 
-app.post('/foods', async (req, res) => {
-    if (req.body.order === 'on') {
-        req.body.order = true;
-    } else {
-        req.body.order = false;
-    }
-    Food.create(req.body);
-    console.log(req.body);
-    res.redirect('/foods')
-})
+// app.post('/foods', async (req, res) => {
+//    if (req.body.order === 'on') {
+//        req.body.order = true;
+//    } else {
+//        req.body.order = false;
+//    }
+//    Food.create(req.body);
+//    console.log(req.body);
+//    res.redirect('/foods')
+// })
 
 app.post('/foods', async (req, res) => {
     req.body.order = req.body.order === 'on';
