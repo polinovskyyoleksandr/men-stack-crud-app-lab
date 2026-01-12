@@ -1,0 +1,16 @@
+<h1>Edit Food</h1>
+
+<form action="/foods/<%= food._id %>?_method=PUT" method="POST">
+    <label>Name:</label>
+    <input type="text" name="name" value="<%= food.name %>" />
+
+    <label>Description:</label>
+    <input type="text" name="description" value="<%= food.description %>" />
+
+    <label>Order:</label>
+    <input type="checkbox" name="order" <%= food.order ? 'checked' : '' %> />
+
+    <button>Update</button>
+</form>
+
+<a href="/foods/<%= food._id %>">Cancel</a>

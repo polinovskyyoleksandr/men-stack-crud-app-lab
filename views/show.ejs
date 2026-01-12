@@ -1,0 +1,12 @@
+<h1><%= food.name %></h1>
+
+<p><%= food.description %></p>
+<p>Ordered: <%= food.order ? 'Yes' : 'No' %></p>
+
+<a href="/foods/<%= food._id %>/edit">Edit</a>
+
+<form action="/foods/<%= food._id %>?_method=DELETE" method="POST">
+    <button>Delete</button>
+</form>
+
+<a href="/foods">Back to menu</a>
