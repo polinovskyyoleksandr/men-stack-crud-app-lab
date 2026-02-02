@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>New Food</title>
+</head>
+<body>
+  <h1>Create Menu</h1>
+
+  <form action="/foods" method="POST">
+    <label>Name:</label>
+    <input type="text" name="name" />
+
+    <label>Description:</label>
+    <input type="text" name="description" />
+
+    <label>Would you like to taste it?</label>
+    <input type="checkbox" name="order" />
+
+    <button type="submit">Add food!</button>
+  </form>
+
+  <a href="/foods">Back</a>
+</body>
+</html>

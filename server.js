@@ -1,75 +1,62 @@
-const express = require('express');
-const mongoose = require('mongoose');
-const dotenv = require('dotenv');
-const methodOverride = require('method-override');
-dotenv.config();
+const express = require('express')
+const mongoose = require('mongoose')
+const dotenv = require('dotenv')
+const methodOverride = require('method-override')
+
+dotenv.config()
 
 const Food = require('./models/food')
 
 const app = express()
-app.use(express.urlencoded({extended: false}));
+
+app.use(express.urlencoded({ extended: false }))
+app.use(methodOverride('_method'))
+
 mongoose.connect(process.env.MONGODB_URI)
 mongoose.connection.on('connected', () => {
-    console.log(`connected to mongoDB ${mongoose.connection.name}`)
+  console.log(`Connected to MongoDB: ${mongoose.connection.name}`)
 })
-app.use(express.urlencoded({ extended: false }));
-app.use(methodOverride('_method'));
 
-//app.get('/test', (req, res) => {
-//    res.send('The server is running')
-// })
-
-app.get('/', async (req, res) => {
-    res.render('index.ejs')
+app.get('/', (req, res) => {
+  res.render('index.ejs')
 })
 
 app.get('/foods', async (req, res) => {
-    const foods = await Food.find();
-    res.render('index-foods.ejs', { foods });
-});
-
-app.get('/foods', async (req, res) => {
-    res.render('new.ejs')
+  const foods = await Food.find()
+  res.render('foods/index.ejs', { foods })
 })
 
-// app.post('/foods', async (req, res) => {
-//    if (req.body.order === 'on') {
-//        req.body.order = true;
-//    } else {
-//        req.body.order = false;
-//    }
-//    Food.create(req.body);
-//    console.log(req.body);
-//    res.redirect('/foods')
-// })
+app.get('/foods/new', (req, res) => {
+  res.render('foods/new.ejs')
+})
 
 app.post('/foods', async (req, res) => {
-    req.body.order = req.body.order === 'on';
-    await Food.create(req.body);
-    res.redirect('/foods');
-});
+  req.body.order = req.body.order === 'on'
+  await Food.create(req.body)
+  res.redirect('/foods')
+})
 
 app.get('/foods/:id', async (req, res) => {
-    const food = await Food.findById(req.params.id);
-    res.render('show.ejs', { food });
-});
+  const food = await Food.findById(req.params.id)
+  res.render('foods/show.ejs', { food })
+})
 
 app.get('/foods/:id/edit', async (req, res) => {
-    const food = await Food.findById(req.params.id);
-    res.render('edit.ejs', { food });
-});
+  const food = await Food.findById(req.params.id)
+  res.render('foods/edit.ejs', { food })
+})
 
 app.put('/foods/:id', async (req, res) => {
-    req.body.order = req.body.order === 'on';
-    await Food.findByIdAndUpdate(req.params.id, req.body);
-    res.redirect(`/foods/${req.params.id}`);
-});
+  req.body.order = req.body.order === 'on'
+  await Food.findByIdAndUpdate(req.params.id, req.body)
+  res.redirect(`/foods/${req.params.id}`)
+})
 
 app.delete('/foods/:id', async (req, res) => {
-    await Food.findByIdAndDelete(req.params.id);
-    res.redirect('/foods');
-});
+  await Food.findByIdAndDelete(req.params.id)
+  res.redirect('/foods')
+})
 
 app.listen(3000, () => {
-    console.log('listening to port 3000')
-});
+  console.log('Server running on port 3000')
+})
