@@ -23,7 +23,7 @@ app.get('/', (req, res) => {
 
 app.get('/foods', async (req, res) => {
   const foods = await Food.find()
-  res.render('foods/index.ejs', { foods })
+  res.render('foods/index-foods.ejs', { foods })
 })
 
 app.get('/foods/new', (req, res) => {
